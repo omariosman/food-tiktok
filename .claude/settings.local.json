@@ -4,7 +4,12 @@
       "Bash(gh issue view:*)",
       "Bash(npm run typecheck:*)",
       "Bash(npm run lint)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(gh issue close:*)",
+      "Bash(expo start:*)",
+      "Bash(npm start)",
+      "Bash(npx expo start:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

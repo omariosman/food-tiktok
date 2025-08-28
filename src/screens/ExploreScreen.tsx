@@ -1,11 +1,34 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
+import { VideoFeed } from '../components/VideoFeed';
+import { Meal } from '../types';
 
-export const ExploreScreen: React.FC = () => {
+interface ExploreScreenProps {
+  navigation?: any;
+}
+
+export const ExploreScreen: React.FC<ExploreScreenProps> = ({ navigation }) => {
+  const handleOrderPress = (meal: Meal) => {
+    // TODO: Navigate to checkout screen when implemented
+    Alert.alert(
+      'Order Meal',
+      `Would you like to order "${meal.name}" for $${meal.price.toFixed(2)}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Order Now', 
+          onPress: () => {
+            // TODO: Implement checkout flow
+            Alert.alert('Coming Soon', 'Checkout functionality will be implemented soon!');
+          }
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Explore</Text>
-      <Text style={styles.subtitle}>Discover amazing meals from local restaurants</Text>
+      <VideoFeed onOrderPress={handleOrderPress} />
     </View>
   );
 };
@@ -13,20 +36,6 @@ export const ExploreScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
+    backgroundColor: '#000',
   },
 });

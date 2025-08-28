@@ -13,8 +13,8 @@ export interface Meal {
   id: string;
   restaurant_id: string;
   name: string;
-  description?: string;
-  video_url?: string;
+  description?: string | null;
+  video_url?: string | null;
   price: number;
   created_at: string;
   restaurant?: Pick<User, 'name' | 'user_type'>;
