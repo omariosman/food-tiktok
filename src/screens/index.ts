@@ -12,3 +12,4 @@ export { ExploreScreen } from './ExploreScreen';
 export { MyRequestsScreen } from './MyRequestsScreen';
 export { UploadMealScreen } from './UploadMealScreen';
 export { RequestsScreen } from './RequestsScreen';
+export { CheckoutScreen } from './CheckoutScreen';
