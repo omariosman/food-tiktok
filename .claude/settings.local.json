@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(gh issue view:*)",
-      "Bash(npm run typecheck:*)"
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run lint)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

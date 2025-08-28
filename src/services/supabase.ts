@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '../types/database';
+import { Database, UserType } from '../types/database';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -14,14 +14,34 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
 
 // Helper functions for common operations
 export const authHelpers = {
-  signUp: async (email: string, password: string, metadata: { name: string }) => {
-    return await supabase.auth.signUp({
+  signUp: async (email: string, password: string, metadata: { name: string }, userType: UserType = 'normal') => {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: metadata,
       },
     });
+
+    if (error) return { data, error };
+
+    // Create user profile with user type
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from('users')
+        .insert({
+          id: data.user.id,
+          name: metadata.name,
+          email,
+          user_type: userType,
+        });
+
+      if (profileError) {
+        return { data, error: profileError };
+      }
+    }
+
+    return { data, error };
   },
   
   signIn: async (email: string, password: string) => {
@@ -37,6 +57,10 @@ export const authHelpers = {
   
   getCurrentUser: () => {
     return supabase.auth.getUser();
+  },
+
+  resetPassword: async (email: string) => {
+    return await supabase.auth.resetPasswordForEmail(email);
   },
 };
 
