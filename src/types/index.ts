@@ -1,31 +1,35 @@
 // Global type definitions
+import { UserType, OrderStatus } from './database';
 
 export interface User {
   id: string;
+  name: string;
   email: string;
-  username: string;
-  avatar_url?: string;
+  user_type: UserType;
   created_at: string;
 }
 
-export interface Video {
+export interface Meal {
   id: string;
-  user_id: string;
-  title: string;
+  restaurant_id: string;
+  name: string;
   description?: string;
-  video_url: string;
-  thumbnail_url?: string;
-  likes_count: number;
-  comments_count: number;
+  video_url?: string;
+  price: number;
   created_at: string;
-  user?: User;
+  restaurant?: Pick<User, 'name' | 'user_type'>;
 }
 
-export interface Comment {
+export interface Order {
   id: string;
-  video_id: string;
-  user_id: string;
-  content: string;
+  meal_id: string;
+  buyer_id: string;
+  restaurant_id: string;
+  address: string;
+  phone: string;
+  status: OrderStatus;
   created_at: string;
-  user?: User;
+  meal?: Meal;
+  buyer?: Pick<User, 'name'>;
+  restaurant?: Pick<User, 'name'>;
 }

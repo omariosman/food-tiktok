@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '../types';
-import { supabase } from '../services/supabase';
+import { authHelpers, dbHelpers } from '../services/supabase';
+import { UserType } from '../types/database';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, username: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string, userType?: UserType) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -17,42 +18,59 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session?.user) {
-          // Fetch user profile
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('id', session.user.id)
-            .single();
-          
-          if (profile) {
-            setUser(profile);
-          }
-        } else {
-          setUser(null);
-        }
-        setLoading(false);
-      }
-    );
+    let subscription: any;
 
-    return () => subscription.unsubscribe();
+    const setupAuth = async () => {
+      // Check current session
+      const { data: { user: authUser } } = await authHelpers.getCurrentUser();
+      
+      if (authUser) {
+        const { data: profile } = await dbHelpers.getUserProfile(authUser.id);
+        if (profile) {
+          setUser(profile);
+        }
+      }
+      setLoading(false);
+
+      // Set up auth state listener
+      const { supabase } = await import('../services/supabase');
+      const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+        async (event, session) => {
+          if (session?.user) {
+            const { data: profile } = await dbHelpers.getUserProfile(session.user.id);
+            if (profile) {
+              setUser(profile);
+            }
+          } else {
+            setUser(null);
+          }
+          setLoading(false);
+        }
+      );
+      subscription = authSubscription;
+    };
+
+    setupAuth();
+
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await authHelpers.signIn(email, password);
     if (error) throw error;
   };
 
-  const signUp = async (email: string, password: string, username: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
+  const signUp = async (email: string, password: string, name: string, userType: UserType = 'normal') => {
+    const { error } = await authHelpers.signUp(email, password, { name });
     if (error) throw error;
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await authHelpers.signOut();
     if (error) throw error;
   };
 
