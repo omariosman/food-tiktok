@@ -1,6 +1,9 @@
 // Global type definitions
 import { UserType, OrderStatus } from './database';
 
+// Re-export types from database for convenience
+export { UserType, OrderStatus };
+
 export interface User {
   id: string;
   name: string;
