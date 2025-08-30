@@ -4,19 +4,25 @@ import { Text } from 'react-native';
 
 import { useAuth } from '../contexts/AuthContext';
 import {
-  ExploreScreen,
+  FeedScreen,
+  SavedScreen,
+  DiscoverScreen,
+  ActivityScreen,
+  ProfileScreen,
   MyRequestsScreen,
   UploadMealScreen,
   RequestsScreen,
-  ProfileScreen,
 } from '../screens';
 
 export type MainTabParamList = {
-  Explore: undefined;
+  Feed: undefined;
+  Saved: undefined;
+  Discover: undefined;
+  Activity: undefined;
+  Profile: undefined;
   MyRequests: undefined;
   UploadMeal: undefined;
   Requests: undefined;
-  Profile: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -31,12 +37,31 @@ export const MainTabNavigator: React.FC = () => {
   if (!user) return null;
 
   const getTabsForUserType = () => {
-    const commonTabs = [
+    // Base navigation tabs that everyone sees (matches design)
+    const baseTabs = [
       {
-        name: 'Explore' as keyof MainTabParamList,
-        component: ExploreScreen,
+        name: 'Feed' as keyof MainTabParamList,
+        component: FeedScreen,
+        icon: '📺',
+        title: 'Feed',
+      },
+      {
+        name: 'Saved' as keyof MainTabParamList,
+        component: SavedScreen,
+        icon: '🔖',
+        title: 'Saved',
+      },
+      {
+        name: 'Discover' as keyof MainTabParamList,
+        component: DiscoverScreen,
         icon: '🔍',
-        title: 'Explore',
+        title: 'Discover',
+      },
+      {
+        name: 'Activity' as keyof MainTabParamList,
+        component: ActivityScreen,
+        icon: '🔔',
+        title: 'Activity',
       },
       {
         name: 'Profile' as keyof MainTabParamList,
@@ -46,52 +71,8 @@ export const MainTabNavigator: React.FC = () => {
       },
     ];
 
-    switch (user.user_type) {
-      case 'normal':
-        return [
-          commonTabs[0], // Explore
-          {
-            name: 'MyRequests' as keyof MainTabParamList,
-            component: MyRequestsScreen,
-            icon: '📝',
-            title: 'My Requests',
-          },
-          commonTabs[1], // Profile
-        ];
-
-      case 'restaurant':
-        return [
-          commonTabs[0], // Explore
-          {
-            name: 'UploadMeal' as keyof MainTabParamList,
-            component: UploadMealScreen,
-            icon: '📸',
-            title: 'Upload Meal',
-          },
-          {
-            name: 'Requests' as keyof MainTabParamList,
-            component: RequestsScreen,
-            icon: '📋',
-            title: 'Requests',
-          },
-          commonTabs[1], // Profile
-        ];
-
-      case 'influencer':
-        return [
-          commonTabs[0], // Explore
-          {
-            name: 'MyRequests' as keyof MainTabParamList,
-            component: MyRequestsScreen,
-            icon: '📝',
-            title: 'My Requests',
-          },
-          commonTabs[1], // Profile
-        ];
-
-      default:
-        return commonTabs;
-    }
+    // Return base tabs for all user types (can add role-specific tabs later if needed)
+    return baseTabs;
   };
 
   const tabs = getTabsForUserType();

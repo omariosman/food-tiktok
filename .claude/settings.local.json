@@ -10,7 +10,14 @@
       "Bash(npm start)",
       "Bash(npx expo start:*)",
       "Bash(npm install:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh issue list:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

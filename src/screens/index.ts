@@ -13,3 +13,10 @@ export { MyRequestsScreen } from './MyRequestsScreen';
 export { UploadMealScreen } from './UploadMealScreen';
 export { RequestsScreen } from './RequestsScreen';
 export { CheckoutScreen } from './CheckoutScreen';
+
+// New main screens
+export { DiscoverScreen } from './DiscoverScreen';
+export { FeedScreen } from './FeedScreen';
+export { SavedScreen } from './SavedScreen';
+export { ActivityScreen } from './ActivityScreen';
+export { RestaurantDetailScreen } from './RestaurantDetailScreen';
