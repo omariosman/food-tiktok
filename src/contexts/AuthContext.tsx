@@ -29,26 +29,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const { data: profile } = await dbHelpers.getUserProfile(authUser.id);
         if (profile) {
           setUser(profile);
+        } else {
+          // If no profile found but user exists, create a basic user object
+          const basicUser: User = {
+            id: authUser.id,
+            email: authUser.email || '',
+            name: (authUser as any).user_metadata?.name || authUser.email?.split('@')[0] || 'User',
+            user_type: 'normal' as UserType,
+            created_at: new Date().toISOString(),
+          };
+          setUser(basicUser);
         }
       }
       setLoading(false);
 
-      // Set up auth state listener
+      // Set up auth state listener only if supabase is available (not in mock mode)
       const { supabase } = await import('../services/supabase');
-      const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-        async (event, session) => {
-          if (session?.user) {
-            const { data: profile } = await dbHelpers.getUserProfile(session.user.id);
-            if (profile) {
-              setUser(profile);
+      if (supabase) {
+        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            if (session?.user) {
+              const { data: profile } = await dbHelpers.getUserProfile(session.user.id);
+              if (profile) {
+                setUser(profile);
+              } else {
+                // If no profile found but user exists, create a basic user object
+                const basicUser: User = {
+                  id: session.user.id,
+                  email: session.user.email || '',
+                  name: (session.user as any).user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+                  user_type: 'normal' as UserType,
+                  created_at: new Date().toISOString(),
+                };
+                setUser(basicUser);
+              }
+            } else {
+              setUser(null);
             }
-          } else {
-            setUser(null);
+            setLoading(false);
           }
-          setLoading(false);
-        }
-      );
-      subscription = authSubscription;
+        );
+        subscription = authSubscription;
+      }
     };
 
     setupAuth();

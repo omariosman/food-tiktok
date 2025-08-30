@@ -209,20 +209,22 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   avatarContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#f0f0f0',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#FFF4F0',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 16,
+    borderWidth: 3,
+    borderColor: '#FF6B35',
   },
   avatar: {
-    fontSize: 32,
+    fontSize: 40,
   },
   userType: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#FF6B35',
     fontWeight: '600',
   },
   section: {
@@ -269,7 +271,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   editButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF6B35',
+    shadowColor: '#FF6B35',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   editButtonText: {
     color: '#fff',

@@ -126,6 +126,9 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     >
       <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="handled">
         <View style={styles.content}>
+          <View style={styles.branding}>
+            <Text style={styles.appName}>BiteSight</Text>
+          </View>
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Join our community of food lovers</Text>
 
@@ -217,6 +220,16 @@ const styles = StyleSheet.create({
     padding: 24,
     paddingTop: 60,
   },
+  branding: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  appName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    letterSpacing: -0.5,
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -263,8 +276,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   userTypeOptionSelected: {
-    borderColor: '#007AFF',
-    backgroundColor: '#f0f7ff',
+    borderColor: '#FF6B35',
+    backgroundColor: '#FFF4F0',
   },
   userTypeIcon: {
     fontSize: 24,
@@ -292,15 +305,23 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   radioSelected: {
-    borderColor: '#007AFF',
-    backgroundColor: '#007AFF',
+    borderColor: '#FF6B35',
+    backgroundColor: '#FF6B35',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF6B35',
     padding: 18,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 8,
+    shadowColor: '#FF6B35',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
@@ -314,7 +335,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   linkText: {
-    color: '#007AFF',
+    color: '#FF6B35',
     fontSize: 14,
     textAlign: 'center',
   },

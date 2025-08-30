@@ -59,6 +59,9 @@ export const ResetPasswordScreen: React.FC<ResetPasswordScreenProps> = ({ naviga
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.content}>
+        <View style={styles.branding}>
+          <Text style={styles.appName}>BiteSight</Text>
+        </View>
         <Text style={styles.title}>Reset Password</Text>
         <Text style={styles.subtitle}>
           {emailSent
@@ -138,6 +141,16 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
   },
+  branding: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  appName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    letterSpacing: -0.5,
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -165,10 +178,18 @@ const styles = StyleSheet.create({
     borderColor: '#e1e1e1',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF6B35',
     padding: 18,
     borderRadius: 12,
     alignItems: 'center',
+    shadowColor: '#FF6B35',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
@@ -184,11 +205,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: '#FF6B35',
     marginTop: 16,
   },
   secondaryButtonText: {
-    color: '#007AFF',
+    color: '#FF6B35',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -217,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   linkText: {
-    color: '#007AFF',
+    color: '#FF6B35',
     fontSize: 14,
     textAlign: 'center',
   },

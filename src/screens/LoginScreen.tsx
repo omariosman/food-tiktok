@@ -58,6 +58,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.content}>
+        <View style={styles.branding}>
+          <Text style={styles.appName}>BiteSight</Text>
+        </View>
         <Text style={styles.title}>Welcome Back</Text>
         <Text style={styles.subtitle}>Sign in to your account</Text>
 
@@ -124,6 +127,16 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: 'center',
   },
+  branding: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  appName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    letterSpacing: -0.5,
+  },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
@@ -150,11 +163,19 @@ const styles = StyleSheet.create({
     borderColor: '#e1e1e1',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF6B35',
     padding: 18,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 8,
+    shadowColor: '#FF6B35',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
@@ -169,7 +190,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   linkText: {
-    color: '#007AFF',
+    color: '#FF6B35',
     fontSize: 14,
     textAlign: 'center',
   },
